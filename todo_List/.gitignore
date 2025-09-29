@@ -1,0 +1,40 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations
+*/migrations/
+!*/migrations/__init__.py
+
+# Environment variables
+.env
+*.env
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Media and static  
+media/
+staticfiles/
+
+# Coverage/testing
+htmlcov/
+.coverage
+.pytest_cache/
