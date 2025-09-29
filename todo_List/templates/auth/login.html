@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Login - ToDo{% endblock %}
+
+{% block content %}
+<h2>تسجيل الدخول</h2>
+<form method="post" class="form-card">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-row">
+        <label for="id_username">Username</label>
+        <input type="text" name="username" id="id_username" required>
+    </div>
+    <div class="form-row">
+        <label for="id_password">Password</label>
+        <input type="password" name="password" id="id_password" required>
+    </div>
+    <button type="submit" class="btn-primary">Login</button>
+</form>
+<p>لو ما عندكش حساب، <a href="{% url 'signup' %}">سجلي هنا</a>.</p>
+{% endblock %}

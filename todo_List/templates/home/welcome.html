@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Welcome - ToDo{% endblock %}
+
+{% block content %}
+<h1>أهلاً، {{ user.username }} 👋</h1>
+
+<div class="card-stats">
+    <div class="stat">
+        <h3>{{ tasks.count }}</h3>
+        <p>Total tasks</p>
+    </div>
+    <div class="stat">
+        <h3>Tasks Summary</h3>
+        <p>Completed: {{ completed_count }}</p>
+        <p>Pending: {{ pending_count }}</p>
+    </div>
+</div>
+
+<div class="actions">
+    <a class="btn-primary" href="{% url 'tasks_list' %}">عرض التاسكات</a>
+    <a class="btn-secondary" href="{% url 'add_task' %}">+ إضافة تاسك جديد</a>
+</div>
+
+{% endblock %}

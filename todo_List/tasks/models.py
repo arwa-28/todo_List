@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Task(models.Model):
+    user = models.ManyToManyField('auth.User', related_name='tasks')
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     complete = models.BooleanField(default=False)
