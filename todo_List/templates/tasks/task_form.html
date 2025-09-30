@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{% if task %}Edit Task{% else %}New Task{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Title:</label>
+    <input type="text" name="title" value="{{ task.title|default:'' }}"><br>
+
+    <label>Description:</label>
+    <textarea name="description">{{ task.description|default:'' }}</textarea><br>
+
+    <label>Complete:</label>
+    <input type="checkbox" name="complete" {% if task.complete %}checked{% endif %}><br>
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}
