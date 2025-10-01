@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}Signup{% endblock %}
 
 {% block extra_css %}
@@ -8,13 +7,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="auth-container">
+<div class="auth-card">
+    <h2>Signup</h2>
     <form method="post">
-        <h2>Signup</h2>
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn">Signup</button>
-        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        <button type="submit" class="btn-auth">Create Account</button>
     </form>
+    <p class="small-text">Already have an account? <a href="{% url 'login' %}">Login</a></p>
 </div>
 {% endblock %}

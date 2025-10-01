@@ -1,42 +1,87 @@
-form {
-    max-width: 400px;
-    margin: 80px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-form .form-group {
-    margin-bottom: 15px;
-}
-
-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-form input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-form button.btn {
+/* الخلفية العامة */
+body {
+    background: #f5f7fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
     width: 100%;
-    background: #007bff;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    background: linear-gradient(135deg, #007bff, #0056d2);
+    padding: 15px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-form button.btn:hover {
-    background: #0056b3;
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 600;
 }
 
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* المحتوى */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* فورم auth */
+.auth-card {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    width: 380px;
+    text-align: center;
+}
+
+/* العنوان */
+.auth-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* الحقول */
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-card input[type="text"],
+.auth-card input[type="password"],
+.auth-card input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.auth-card input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}

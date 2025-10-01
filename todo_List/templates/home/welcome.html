@@ -1,17 +1,12 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Welcome - ToDo{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
-{% endblock %}
+{% block title %}Welcome{% endblock %}
 
 {% block content %}
-    <div class="home">
+    <div class="card">
         <h1>Welcome</h1>
         <p>ToDo App</p>
-        <a href="{% url 'login' %}">Login</a>
-        <p>Don't have an account?</p>
-        <a href="{% url 'signup' %}">Signup</a>
+        <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+        <p class="small-text">Don't have an account?</p>
+        <a href="{% url 'signup' %}" class="btn btn-signup">Signup</a>
     </div>
 {% endblock %}
