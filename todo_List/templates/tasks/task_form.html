@@ -1,11 +1,27 @@
 {% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit Task{% else %}New Task{% endif %}{% endblock %}
 
 {% block content %}
-<h2>{% if form.instance.pk %}Edit Task{% else %}New Task{% endif %}</h2>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            window.location.href = "{% url 'welcome' %}";
+        }
+    };
+</script>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+<div class="task-form-container">
+<div class="form-header">
+    <h2>{% if form.instance.pk %}Edit Task{% else %}New Task{% endif %}</h2>
+</div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save-btn">Save</button>
+    </form>
+</div>
 {% endblock %}
