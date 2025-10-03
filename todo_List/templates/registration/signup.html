@@ -5,30 +5,66 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<style>
+    .alert {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+    .error {
+        color: #d9534f;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="auth-container">
     <div class="auth-card">
         <h2>Signup</h2>
-        <form method="post">
+
+        <!-- رسائل عامة -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" novalidate>
             {% csrf_token %}
+
             <div class="form-group">
-                {{ form.}}
                 {{ form.username }}
+                {% for err in form.username.errors %}
+                    <div class="error">{{ err }}</div>
+                {% endfor %}
             </div>
+
             <div class="form-group">
-                
                 {{ form.password1 }}
+                {% for err in form.password1.errors %}
+                    <div class="error">{{ err }}</div>
+                {% endfor %}
             </div>
+
             <div class="form-group">
-                
                 {{ form.password2 }}
+                {% for err in form.password2.errors %}
+                    <div class="error">{{ err }}</div>
+                {% endfor %}
             </div>
+
             <button type="submit" class="btn-auth">Create Account</button>
         </form>
 
-        <p class="small-text">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        <p class="small-text">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </p>
     </div>
 </div>
 {% endblock %}
