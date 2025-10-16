@@ -55,34 +55,19 @@ body {
     margin-bottom: 15px;
 }
 
-/* زرار Add Task */
-.add-task-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #ffcc33, #ff9900);
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 15px;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.add-task-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-}
-
-/* grid للكروت */
+/* شبكة الكروت */
 .tasks-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
-    max-width: 1200px;
+    max-width: calc(1200px - 100px);
     margin: 0 auto;
     padding: 0 15px 40px;
+    margin-right: 110px; /* مساحة للبار */
+    justify-content: center;
 }
 
-/* الكارد */
+/* كارت التاسك */
 .task-card {
     background: #fff;
     border: 2px solid #eee;
@@ -97,14 +82,14 @@ body {
     box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
 
-/* الكارد لو completed */
 .task-card.done {
     border-color: #4caf50;
     background: #f6fff6;
-    opacity: 0.95;
+    opacity: 0.7;
+    text-decoration: line-through;
 }
 
-/* العنوان مع الـcheckbox */
+/* العنوان والوصف */
 .task-header {
     display: flex;
     align-items: center;
@@ -117,7 +102,6 @@ body {
     flex-grow: 1;
 }
 
-/* الوصف */
 .task-desc {
     font-size: 14px;
     color: #555;
@@ -130,7 +114,7 @@ body {
     -webkit-box-orient: vertical;
 }
 
-/* أزرار الاكشن */
+/* أزرار الأكشنز */
 .task-actions {
     display: flex;
     justify-content: space-between;
@@ -222,7 +206,6 @@ input[type="checkbox"] {
     width: 250px; 
 }
 
-
 /* Welcome / Auth Pages (login & signup) */
 .content {
     flex: 1;
@@ -230,6 +213,7 @@ input[type="checkbox"] {
     justify-content: center;
     align-items: center;
 }
+
 .card {
     background: #ffffff;
     padding: 40px 30px;
@@ -238,12 +222,14 @@ input[type="checkbox"] {
     text-align: center;
     width: 360px;
 }
+
 .card h1 {
     font-size: 2rem;
     margin-bottom: 10px;
     font-weight: bold;
     color: #222;
 }
+
 .card p {
     margin-bottom: 25px;
     color: #555;
@@ -265,29 +251,34 @@ input[type="checkbox"] {
     text-align: center;
     text-decoration: none;
 }
+
 .btn-login {
     background: linear-gradient(135deg, #007bff, #0056d2);
     color: white;
 }
+
 .btn-login:hover {
     background: linear-gradient(135deg, #0056d2, #0041a8);
     transform: translateY(-2px);
 }
+
 .btn-signup {
     background: linear-gradient(135deg, #28a745, #1e7e34);
     color: white;
 }
+
 .btn-signup:hover {
     background: linear-gradient(135deg, #1e7e34, #155d27);
     transform: translateY(-2px);
 }
+
 .small-text {
     margin: 15px 0 5px 0;
     font-size: 0.9rem;
     color: #666;
 }
-/* ************************** */
 
+/* Navbar buttons */
 .navbar a,
 .navbar button {
     padding: 8px 16px;
@@ -315,7 +306,176 @@ input[type="checkbox"] {
     vertical-align: middle;
 }
 
-.task-card.done {
-    opacity: 0.7;
-    text-decoration: line-through;
+/* الشريط الجانبي الثابت */
+.right-sidebar {
+    position: fixed;
+    top: 80px; /* تحت الـnavbar */
+    bottom: 70px; /* فوق الـfooter */
+    right: 0;
+    width: 90px;
+    background-color: #ffffff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 0;
+    gap: 25px;
+    z-index: 900;
+}
+
+/* الأيقونات داخل البار */
+.right-sidebar i,
+.right-sidebar label {
+    color: #007bff;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.right-sidebar i:hover,
+.right-sidebar label:hover {
+    color: #0056b3;
+    transform: scale(1.15);
+}
+
+.right-sidebar {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.sidebar-item {
+    position: relative;
+}
+
+.sidebar-item i {
+    font-size: 22px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.sidebar-item i:hover {
+    color: #007bff;
+    transform: scale(1.2);
+}
+
+/* Tooltip */
+.sidebar-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 120%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    font-size: 13px;
+    min-width: 110px;
+    text-align: center;
+}
+
+.sidebar-tooltip:hover::after {
+    opacity: 1;
+}
+
+/* checkbox style */
+#show-completed {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* لما يكون الفلتر متعلم عليه */
+#show-completed:checked + label i {
+    color: #28a745; /* أخضر */
+    transform: scale(1.2);
+}
+
+/* لما يكون مش متعلم عليه */
+#show-completed + label i {
+    color: #888;
+    transition: color 0.3s, transform 0.2s;
+}
+
+/* تغليف البار بالكامل */
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 200px; /* ممكن تزوديها حسب مساحة النافبار */
+    margin-left: auto; /* يخليه ناحية اليمين */
+    margin-right: 40px; /* مسافة من زر الـlogout */
+}
+
+/* الحاوية البيضاء للبار */
+.progress-container {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #ffffff; /* أبيض واضح */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* ظل خفيف */
+}
+
+/* البار نفسه */
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #81c995; /* مبدئيًا أخضر فاتح */
+    transition: width 0.4s ease, background-color 0.4s ease;
+    border-radius: 10px;
+}
+
+/* النسبة المئوية */
+#progress-text {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 35px;
+    text-align: right;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    background: linear-gradient(135deg, #007bff, #3399ff);
+    padding: 10px 30px;
+}
+
+/* مسافة واضحة بين الزر والبار */
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 220px;
+    margin-left: 30px;
+}
+
+/* خلي النسبة تبان جنب البار */
+#progress-text {
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    min-width: 40px;
+    text-align: left;
 }

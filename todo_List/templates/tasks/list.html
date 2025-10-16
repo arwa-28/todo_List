@@ -13,44 +13,73 @@
     };
 </script>
 
-<div class="tasks-header">
-    <h2>Hello, {{ user.username }}</h2>
-    <a href="{% url 'task_create' %}" class="add-task-btn">+ Add Task</a>
-</div>
 
-<div class="tasks-grid">
-    {% for task in tasks %}
-        <div class="task-card {% if task.complete %}done{% endif %}">
-            <div class="task-header">
-                <input type="checkbox" class="task-checkbox" data-task-id="{{ task.pk }}" {% if task.complete %}checked{% endif %}>
-                <h3>{{ task.title }}</h3>
-            </div>
-            <p class="task-desc">{{ task.description }}</p>
-            <div class="task-actions">
-                <a href="{% url 'task_update' task.pk %}" class="edit-btn">Edit</a>
-                <form action="{% url 'task_delete' task.pk %}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this task?');">
-                    {% csrf_token %}
-                    <button type="submit" class="delete-btn">Delete</button>
-                </form>
-            </div>
+<!-- المهام -->
+<div class="tasks-container">
+    <!-- Sidebar ثابت على اليمين -->
+    <div class="right-sidebar">
+        <!-- زر الفلتر -->
+        <div class="sidebar-item">
+            <input type="checkbox" id="show-completed" checked>
+            <label for="show-completed" class="sidebar-tooltip" data-tooltip="Show Completed">
+                <i class="fa-solid fa-filter"></i>
+            </label>
         </div>
-    {% empty %}
-        <p>No tasks yet.</p>
-    {% endfor %}
+    
+        <!-- زر الإضافة -->
+        <div class="sidebar-item">
+            <a href="{% url 'task_create' %}" class="sidebar-tooltip" data-tooltip="Add Task">
+                <i class="fa-solid fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- grid المهام -->
+    <div class="tasks-grid" id="tasks-grid">
+        {% for task in tasks %}
+            <div class="task-card {% if task.complete %}done{% endif %}">
+                <div class="task-header">
+                    <input type="checkbox" class="task-checkbox" data-task-id="{{ task.pk }}" {% if task.complete %}checked{% endif %}>
+                    <h3>{{ task.title }}</h3>
+                </div>
+                <p class="task-desc">{{ task.description }}</p>
+                <div class="task-actions">
+                    <a href="{% url 'task_update' task.pk %}" class="edit-btn">Edit</a>
+                    <form action="{% url 'task_delete' task.pk %}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this task?');">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <p>No tasks yet.</p>
+        {% endfor %}
+    </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const checkboxes = document.querySelectorAll(".task-checkbox");
+    const showCompleted = document.getElementById("show-completed");
+    const tasksGrid = document.getElementById("tasks-grid");
+
+    function reorderTasks() {
+        const tasks = Array.from(tasksGrid.children);
+        const incomplete = tasks.filter(t => !t.classList.contains("done"));
+        const complete = tasks.filter(t => t.classList.contains("done"));
+
+        tasksGrid.innerHTML = "";
+        incomplete.forEach(t => tasksGrid.appendChild(t));
+        if (showCompleted.checked) complete.forEach(t => tasksGrid.appendChild(t));
+    }
 
     checkboxes.forEach(cb => {
         cb.addEventListener("change", (e) => {
             const taskId = e.target.dataset.taskId;
             const checked = e.target.checked;
-
-            document.querySelectorAll(`.task-checkbox[data-task-id='${taskId}']`).forEach(other => {
-                if (other !== e.target) other.checked = checked;
-            });
 
             fetch("{% url 'toggle_task_complete' %}", {
                 method: "POST",
@@ -64,11 +93,43 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("Failed to update task.");
                     e.target.checked = !checked; 
                 }
+
+                const taskCard = e.target.closest(".task-card");
+                taskCard.classList.toggle("done", checked);
+                reorderTasks();
+                updateProgressBar();
             });
         });
     });
+
+    showCompleted.addEventListener("change", reorderTasks);
+    reorderTasks();
+
+    function updateProgressBar() {
+        const tasks = document.querySelectorAll('.task-card');
+        const completed = document.querySelectorAll('.task-card.done');
+        const bar = document.getElementById('progress-bar');
+        const text = document.getElementById('progress-text');
+
+        if (!tasks.length) {
+            bar.style.width = '0%';
+            text.textContent = '0%';
+            bar.style.backgroundColor = '#f28b82';
+            return;
+        }
+
+        const percent = Math.round((completed.length / tasks.length) * 100);
+        bar.style.width = percent + '%';
+        text.textContent = percent + '%';
+
+        if (percent < 25) bar.style.backgroundColor = '#f28b82'; // أحمر ناعم
+        else if (percent < 50) bar.style.backgroundColor = '#fbbc04'; // برتقالي ناعم
+        else if (percent < 75) bar.style.backgroundColor = '#fff176'; // أصفر ناعم
+        else bar.style.backgroundColor = '#81c995'; // أخضر ناعم
+    }
+
+    updateProgressBar();
 });
 </script>
-
 
 {% endblock %}
